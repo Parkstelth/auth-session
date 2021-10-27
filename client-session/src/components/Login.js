@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class Login extends Component {
@@ -18,9 +19,26 @@ class Login extends Component {
   loginRequestHandler() {
     // TODO: 로그인 요청을 보내세요.
     //
+    axios.post('https://localhost:4000/users/login',{userId:this.state.username,password:this.state.password},{withCredentials:true})
+    .then(res=>{
+      this.props.loginHandler();
+      axios.get('https://localhost:4000/users/userinfo',{withCredentials:true})
+      .then(res=>{
+        console.log(res)
+        this.props.setUserInfo(res.data.userData)
+      })
+    })
+    
+
+
     // 로그인에 성공하면
     // - props로 전달받은 함수를 호출해, 로그인 상태를 변경하세요.
     // - GET /users/userinfo 를 통해 사용자 정보를 요청하세요
+    // axios.get('https://localhost:4000/users/userinfo')
+    // .then(res=>{
+    //   console.log("test11",res.data.data)
+    //   this.props.setUserInfo({"userData":res.data.data})
+    // })
     //
     // 사용자 정보를 받아온 후
     // - props로 전달받은 함수를 호출해, 사용자 정보를 변경하세요.

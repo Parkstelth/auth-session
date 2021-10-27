@@ -1,4 +1,5 @@
 // 해당 모델의 인스턴스를 models/index.js에서 가져옵니다.
+const session = require('express-session');
 const { Users } = require('../../models');
 
 module.exports = {
@@ -11,11 +12,16 @@ module.exports = {
 
     // TODO: userInfo 결과 존재 여부에 따라 응답을 구현하세요.
     // 결과가 존재하는 경우 세션 객체에 userId가 저장되어야 합니다.
-    if (!result) {
-      // your code here
+    if (!userInfo) {
+      
+     res.status(400).json({message:'not authorized'})
     } else {
       // your code here
       // HINT: req.session을 사용하세요.
+      console.log(req.session)
+      req.session["userId"] = userInfo.userId //로그인시 세션에 쿠키 userid저장
+      res.status(201).json({message:'ok'})
+    
     }
   }
 }

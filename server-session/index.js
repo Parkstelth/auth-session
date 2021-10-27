@@ -19,12 +19,12 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      domain: FILL_ME_IN,
-      path: FILL_ME_IN,
+      domain: "localhost",
+      path: "/",
       maxAge: 24 * 6 * 60 * 10000,
-      sameSite: FILL_ME_IN,
-      httpOnly: FILL_ME_IN,
-      secure: FILL_ME_IN,
+      sameSite: "None",
+      httpOnly: true,
+      secure: true,
     },
   })
 );
@@ -34,12 +34,19 @@ app.use(express.urlencoded({ extended: false }));
 
 // TODO: CORS 설정이 필요합니다. 클라이언트가 어떤 origin인지에 따라 달리 설정할 수 있습니다.
 // 메서드는 GET, POST, OPTIONS를 허용합니다.
-app.use(cors());
+let corsOption ={
+  "origin":"https://localhost:3000",
+  "methods":"GET,POST,OPTION",
+  "optionSuccessStatus":204,
+  "credentials":true,
+
+}
+app.use(cors(corsOption));
 /**
  * /users 요청에 대해서 라우터를 이용하기 때문에,
  * 반드시 아래와 같은 주소와 메서드로 요청을 보내야 합니다.
  *
- * POST https://localhost:4000/users/login,
+ * POST https://localhost:4000/users/userinfo,
  * POST https://localhost:4000/users/logout,
  * GET https://localhost:4000/users/userinfo
  */
